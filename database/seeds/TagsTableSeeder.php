@@ -13,12 +13,15 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         $tags = [
-            'funny', 
-            'ironic',
-            'quick',
-            '2022',
-            'dragonball',
-            'ilsignoredeglianelli',
+            '#Funny', 
+            '#Ironic',
+            '#Quick',
+            '#2022',
+            '#Dragon-ball',
+            '#Il-signore-degli-anelli',
+            '#Calcio',
+            '#Basket',
+            '#Volley'
         ];
 
         foreach($tags as $tag){
