@@ -56,7 +56,7 @@ class PostController extends Controller
             ],
             'post_image'=>'required|activeurl',
             'post_content'=>'min:10|required',
-            'tags'=>'required',
+            
         ]);
         $data['user_id'] = Auth::id();
         $data['post_date'] = new DateTime();
@@ -64,7 +64,10 @@ class PostController extends Controller
         $newPost = new Post();
         $newPost->fill($data);
         $newPost->save();
-        $newPost->tags()->sync($data['tags']);
+        if(isset($data['tags'])){
+            $newPost->tags()->sync($data['tags']);
+        }
+        
         
         return redirect()->route('admin.posts.index')->with('create', $data['title'] . ' ' . 'é stato creato con successo');
     }
@@ -112,15 +115,20 @@ class PostController extends Controller
             ],
             'post_image'=>'required|activeurl',
             'post_content'=>'min:10|required',
+            
         ]);
 
         $dates['user_id'] = Auth::id();
         $dates['post_date'] = new DateTime();
-        $newPost = new Post();
+        
         
         $post->update($dates);
-
-        $post->tags()->sync($dates['tags']);
+        if(isset($dates['tags'])){
+            $post->tags()->sync($dates['tags']);
+        } else{
+            $post->tags()->detach();
+        }
+        
         
 
         return redirect()->route('admin.posts.index')->with('edit', $dates['title'] . ' ' . 'è stato modificato con successo');
