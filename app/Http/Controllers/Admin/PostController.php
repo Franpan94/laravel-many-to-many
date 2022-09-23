@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -31,8 +32,8 @@ class PostController extends Controller
      */
     public function create(Post $post)
     {
-        //
-        return view('admin.posts.create', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('post','tags'));
     }
 
     /**
@@ -45,6 +46,7 @@ class PostController extends Controller
     {
         //
         $data = $request->all();
+        
         $request->validate([
             'title'=>[
                 'min:3',
@@ -54,13 +56,19 @@ class PostController extends Controller
             ],
             'post_image'=>'required|activeurl',
             'post_content'=>'min:10|required',
+            'tags'=>'required',
         ]);
         $data['user_id'] = Auth::id();
         $data['post_date'] = new DateTime();
 
-        $post = Post::create($data);
-
-        return redirect()->route('admin.posts.show', compact('post'))->with('create', $data['title'] . ' ' . 'é stato creato con successo');
+        $newPost = new Post();
+        $newPost->fill($data);
+        $newPost->save();
+        $newPost->tags()->sync($data['tags']);
+        
+        Post::create($data);
+        
+        return redirect()->route('admin.posts.index')->with('create', $data['title'] . ' ' . 'é stato creato con successo');
     }
 
     /**
@@ -83,8 +91,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
-        return view('admin.posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -110,7 +118,13 @@ class PostController extends Controller
 
         $dates['user_id'] = Auth::id();
         $dates['post_date'] = new DateTime();
+        $newPost = new Post();
+        $newPost->fill($dates);
+        $newPost->save();
+        $newPost->tags()->sync($dates['tags']);
+
         $post->update($dates);
+        
 
         return redirect()->route('admin.posts.show', compact('post'))->with('edit', $dates['title'] . ' ' . 'è stato modificato con successo');
     }

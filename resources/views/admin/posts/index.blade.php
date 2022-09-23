@@ -9,6 +9,11 @@
           <span>{{ session('delete') }}</span>
         </div>
       @endif
+      @if (session('create'))
+        <div class="alert alert-primary m-3">
+          <span>{{ session('create') }}</span>
+        </div> 
+      @endif
       <table class="table table-striped table-dark">
         <thead>
           <tr>
@@ -28,7 +33,7 @@
               <td>{{ $post->user->name }}</td>
               <td>
                  @forelse ($post->tags as $tag )
-                   {{ $tag->name }}
+                   #{{ $tag->name }}
                  @empty
                    nessun tag
                  @endforelse
