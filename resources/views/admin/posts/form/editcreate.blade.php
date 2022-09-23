@@ -28,14 +28,14 @@
     @enderror
   </div>
   @foreach ($tags as $tag)
-    <div class="p-4">
-      @if ($errors->any)
+    <div class="p-2">
+      @if ($errors->any())
         <input type="checkbox" name="tags[]" id="tags" value="{{ $tag->id }}"
-        {{ in_array($tag->id, old('tags', [])) ? 'active' : ''}}>
+        {{ in_array($tag->id, old('tags', [])) ? 'checked' : ''}}>
         #{{ $tag->name }}
       @else
         <input type="checkbox" name="tags[]" id="tags" value="{{ $tag->id }}"
-        {{ $post->tags->contains($tag) ? 'active' : '' }}>
+        {{ $post->tags->contains($tag) ? 'checked' : '' }}>
         #{{ $tag->name }}
       @endif
     </div>

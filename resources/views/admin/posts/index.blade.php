@@ -14,6 +14,11 @@
           <span>{{ session('create') }}</span>
         </div> 
       @endif
+      @if (session('edit'))
+        <div class="alert alert-success m-3">
+          <span>{{ session('edit') }}</span>
+        </div>   
+      @endif
       <table class="table table-striped table-dark">
         <thead>
           <tr>

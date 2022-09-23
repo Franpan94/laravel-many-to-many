@@ -3,11 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            @if (session('edit'))
-               <div class="alert alert-success m-3">
-                   <span>{{ session('edit') }}</span>
-               </div>   
-            @endif
             <div class="col-12 text-center">
                 <h1 class="pt-2">{{ $post->title }}</h1>
                 <img src="{{ $post->post_image }}" alt="{{ $post->title }}">

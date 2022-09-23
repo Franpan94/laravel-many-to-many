@@ -44,7 +44,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
         $data = $request->all();
         
         $request->validate([
@@ -65,8 +65,6 @@ class PostController extends Controller
         $newPost->fill($data);
         $newPost->save();
         $newPost->tags()->sync($data['tags']);
-        
-        Post::create($data);
         
         return redirect()->route('admin.posts.index')->with('create', $data['title'] . ' ' . 'é stato creato con successo');
     }
@@ -119,14 +117,13 @@ class PostController extends Controller
         $dates['user_id'] = Auth::id();
         $dates['post_date'] = new DateTime();
         $newPost = new Post();
-        $newPost->fill($dates);
-        $newPost->save();
-        $newPost->tags()->sync($dates['tags']);
-
+        
         $post->update($dates);
+
+        $post->tags()->sync($dates['tags']);
         
 
-        return redirect()->route('admin.posts.show', compact('post'))->with('edit', $dates['title'] . ' ' . 'è stato modificato con successo');
+        return redirect()->route('admin.posts.index')->with('edit', $dates['title'] . ' ' . 'è stato modificato con successo');
     }
 
     /**
