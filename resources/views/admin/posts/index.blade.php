@@ -24,8 +24,8 @@
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Titolo</th>
-            <th scope="col">UserName</th>
             <th scope="col">Tag</th>
+            <th scope="col">UserName</th>
             <th scope="col">UserId</th>
             <th scope="col">Modifica/Elimina</th>
           </tr>
@@ -34,15 +34,15 @@
           <tbody>
             <tr>
               <th scope="row">{{ $post->id }}</th>
-              <td><a href="{{ route('admin.posts.show', $post->id) }}">{{ $post->title }}</a></td>
-              <td>{{ $post->user->name }}</td>
+              <td><a class="ms_a_posts" href="{{ route('admin.posts.show', $post->id) }}">{{ $post->title }}</a></td>
               <td>
                  @forelse ($post->tags as $tag )
                    #{{ $tag->name }}
                  @empty
-                   nessun tag
+                   Nessun tag
                  @endforelse
               </td>
+              <td>{{ $post->user->name }}</td>
               <td>{{ $post->user_id }}</td>
               <td>
                 <form action="{{ route('admin.posts.edit', $post->id) }}" method="GET" class="d-inline">

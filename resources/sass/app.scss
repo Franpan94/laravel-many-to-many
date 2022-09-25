@@ -8,8 +8,19 @@
 @import '~bootstrap/scss/bootstrap';
 
 main{
-    a{
-        color: white;
+    .ms_a_posts{
+        color: $body-bg;
         text-decoration: none;
+        &:hover{
+            color: orangered;
+        }
+    }
+
+    .ms_a_tags{
+        color: $black;
+        text-decoration: none;
+        &:hover{
+            color: blueviolet;
+        }
     }
 }
