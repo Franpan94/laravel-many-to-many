@@ -1,4 +1,4 @@
-<form action="{{ route($routename, $post->id) }}" method="POST">
+<form action="{{ route($routename, $post->id) }}" method="POST" enctype="multipart/form-data">
   @method($method)
   @csrf
 
@@ -11,15 +11,18 @@
     @enderror
   </div>
   <div class="p-4">
-    <textarea name="post_image" id="post_image" cols="50" rows="30" required placeholder="Inserisci immagine">
-      {{ old('post_image', $post->post_image) }} 
-    </textarea>
+    <div class="pb-1">
+      <span>Inserisci copertina</span>
+    </div>
+    <input type="file" name="post_image" id="post_image"  
+      required value="{{ old('post_image', $post->post_image) }} "  
+    >
     @error('post_image')
       <div class="alert alert-danger">{{ $message }}</div>
     @enderror
   </div>
   <div class="p-4">
-    <textarea name="post_content" id="post_content" cols="50" rows="30" required
+    <textarea name="post_content" id="post_content" cols="80" rows="10" required
       placeholder="Inserisci descrizione">
       {{ old('post_content', $post->post_content) }} 
     </textarea>

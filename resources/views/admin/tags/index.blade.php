@@ -19,6 +19,7 @@
               <span>#{{ session('deleteTag') }}</span>  
             </div>  
           @endif
+            <a class="p-3 text-secondary" href="{{ route('admin.tags.create') }}">Aggiungi nuovo Tag</a>
             <table class="table table-striped">
                 <thead>
                   <tr>

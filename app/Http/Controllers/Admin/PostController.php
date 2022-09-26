@@ -9,6 +9,7 @@ use App\Models\Tag;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -54,12 +55,14 @@ class PostController extends Controller
                 'required',
                 Rule::unique('posts')->ignore($data['title'], 'title'),
             ],
-            'post_image'=>'required|activeurl',
+            'post_image'=>'required|max:256',
             'post_content'=>'min:10|required',
             
         ]);
         $data['user_id'] = Auth::id();
         $data['post_date'] = new DateTime();
+
+        $data['post_image'] = Storage::put('uploads', $data['post_image']);
 
         $newPost = new Post();
         $newPost->fill($data);
@@ -113,13 +116,15 @@ class PostController extends Controller
                 'required',
                 Rule::unique('posts')->ignore($dates['title'], 'title'),
             ],
-            'post_image'=>'required|activeurl',
+            'post_image'=>'required|max:256',
             'post_content'=>'min:10|required',
             
         ]);
 
         $dates['user_id'] = Auth::id();
         $dates['post_date'] = new DateTime();
+
+        $dates['post_image'] = Storage::put('upload', $dates['post_image']);
         
         
         $post->update($dates);

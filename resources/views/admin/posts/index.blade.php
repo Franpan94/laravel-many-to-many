@@ -19,6 +19,7 @@
           <span>{{ session('edit') }}</span>
         </div>   
       @endif
+      <a class="p-3 text-secondary" href="{{ route('admin.posts.create') }}">Aggiungi nuovo post</a>
       <table class="table table-striped table-dark">
         <thead>
           <tr>
